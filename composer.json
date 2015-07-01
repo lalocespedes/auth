@@ -1,0 +1,26 @@
+{
+    "autoload":{
+        "psr-4":{
+            "lalocespedes\\": "app//lalocespedes"
+        }
+    },
+    "name": "lalocespedes/auth",
+    "authors": [
+        {
+            "name": "Eduardo Cespedes",
+            "email": "lalocespedes@gmail.com"
+        }
+    ],
+    "require" : {
+        "robmorgan/phinx": "^0.4.4",
+        "slim/slim": "~2.0",
+        "slim/views": "0.1.*",
+        "twig/twig": "~1.0",
+        "phpmailer/phpmailer": "~5.2",
+        "hassankhan/config": "0.8.*",
+        "illuminate/database": "~5.0",
+        "alexgarrett/violin": "2.*",
+        "ircmaxell/random-lib": "~1.1",
+        "symfony/var-dumper": "~2.7"
+    }
+}
