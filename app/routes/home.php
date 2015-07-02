@@ -1,11 +1,15 @@
 <?php
 
-$app->get('/', $guest(), function() use ($app) {
+$app->get('/', $authenticated(), function() use ($app) {
 
 	echo "Home".'<br>';
 
 	var_dump($_SESSION).'<br>';
 
-	dd($app->auth);
+	if($app->auth){
+
+		dd($app->auth->username);
+
+	}
 
 });

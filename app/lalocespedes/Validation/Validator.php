@@ -3,7 +3,10 @@
 namespace lalocespedes\Validation;
 
 use Violin\Violin;
+
 use lalocespedes\User\User;
+use lalocespedes\Helpers\Hash;
+
 /**
 * 
 */
@@ -11,9 +14,15 @@ class Validator extends Violin
 {
 	protected $user;
 
-	public function __construct(User $user)
+	protected $hash;
+
+	protected $auth;
+
+	public function __construct(User $user, Hash $hash, $auth = null)
 	{
 		$this->user = $user;
+		$this->hash = $hash;
+		$this->auth = $auth;
 
 		$this->addFieldMessages([
 			'email' => [
@@ -22,6 +31,10 @@ class Validator extends Violin
 			'username' => [
 				'uniqueUsername' => 'That username is already in use'
 			]
+		]);
+
+		$this->addRuleMessages([
+			'matchesCurrentPassword' => 'Contrasena actual invalida'
 		]);
 	}
 
@@ -35,5 +48,14 @@ class Validator extends Violin
 	public function validate_uniqueUsername($value, $input, $args)
 	{
 		return ! (bool) $this->user->where('username', $value)->count();
+	}
+
+	public function validate_matchesCurrentPassword($value, $input, $args)
+	{
+		if ($this->auth && $this->hash->passwordCheck($value, $this->auth->password)) {
+			return true;
+		}
+
+		return false;
 	}
 }
