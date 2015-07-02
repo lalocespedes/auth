@@ -19,11 +19,21 @@ $app->post('/register', function() use($app) {
 	]);
 
 	if ($v->passes()) {
-		$app->user->create([
+
+		$user = $app->user->create([
 			'email' => $email,
 			'username' => $username,
 			'password' => $app->hash->password($password)
 		]);
+
+		$app->mail->send('email/auth/registered.php', ['user' => $user], function($message) use($user) {
+
+			$message->to($user->email);
+			$message->subject('Gracias por registrarse');
+
+		});
+
+		echo "Regristrado";
 
 		exit();
 	} 

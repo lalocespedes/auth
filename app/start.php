@@ -10,6 +10,7 @@ use RandomLib\Factory as Randomlib;
 use lalocespedes\User\User;
 use lalocespedes\Helpers\Hash;
 use lalocespedes\Validation\Validator;
+use lalocespedes\Mail\Mailer;
 
 use lalocespedes\Middleware\Beforemiddleware;
 
@@ -53,6 +54,23 @@ $app->container->singleton('hash', function() use($app) {
 
 $app->container->singleton('validation', function() use($app) {
 	return new Validator($app->user);
+});
+
+$app->container->singleton('mail', function() use($app) {
+
+	$mailer = new PHPMailer;
+	$mailer->IsSMTP();
+	$mailer->Host = $app->config->get('mail.host');
+	$mailer->SMTPAuth = $app->config->get('mail.smtp_auth');
+	$mailer->SMTPSecure = $app->config->get('mail.smtp_secure');
+	$mailer->Port = $app->config->get('mail.port');
+	$mailer->Username = $app->config->get('mail.username');
+	$mailer->Password = $app->config->get('mail.password');
+
+	$mailer->isHTML($app->config->get('mail.html'));
+
+	return new Mailer($app->view, $mailer);
+
 });
 
 $app->container->set('user', function() {
