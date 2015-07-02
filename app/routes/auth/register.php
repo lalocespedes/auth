@@ -1,6 +1,6 @@
 <?php
 
-$app->post('/register', function() use($app) {
+$app->post('/register', $guest(), function() use($app) {
 	
 	$request = $app->request;
 

@@ -1,9 +1,11 @@
 <?php
 
-$app->get('/', function() use ($app) {
+$app->get('/', $guest(), function() use ($app) {
 
-	echo "Inicio route";
+	echo "Home".'<br>';
 
-	var_dump($_SESSION);
+	var_dump($_SESSION).'<br>';
+
+	dd($app->auth);
 
 });

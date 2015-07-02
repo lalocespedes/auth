@@ -38,8 +38,9 @@ $app->configureMode($app->config('mode'), function() use ($app) {
 	$app->config = Config::load(INC_ROOT . "/app/config/{$app->mode}.php");
 });
 
-require 'routes.php';
 require 'database.php';
+require 'filters.php';
+require 'routes.php';
 
 $app->auth = false;
 
