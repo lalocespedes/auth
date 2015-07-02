@@ -7,6 +7,9 @@ use Slim\Views\TwigExtension;
 use Noodlehaus\Config;
 use RandomLib\Factory as Randomlib;
 
+use lalocespedes\User\User;
+use lalocespedes\Helpers\Hash;
+
 // set timezone for timestamps etc
 date_default_timezone_set('Mexico/General');
 
@@ -25,4 +28,23 @@ $app = new Slim([
 	'templates.path' => INC_ROOT . '/app/views'
 ]);
 
+$app->configureMode($app->config('mode'), function() use ($app) {
+	$app->config = Config::load(INC_ROOT . "/app/config/{$app->mode}.php");
+});
+
 require 'routes.php';
+require 'database.php';
+
+
+$app->container->singleton('randomlib', function() use($app) {
+	$factory = new RandomLib;
+	return $factory->getMediumStrengthGenerator();
+});
+
+$app->container->singleton('hash', function() use($app) {
+	return new Hash($app->config);
+});
+
+$app->container->set('user', function() {
+	return new User;
+});
