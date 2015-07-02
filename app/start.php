@@ -9,6 +9,7 @@ use RandomLib\Factory as Randomlib;
 
 use lalocespedes\User\User;
 use lalocespedes\Helpers\Hash;
+use lalocespedes\Validation\Validator;
 
 // set timezone for timestamps etc
 date_default_timezone_set('Mexico/General');
@@ -43,6 +44,10 @@ $app->container->singleton('randomlib', function() use($app) {
 
 $app->container->singleton('hash', function() use($app) {
 	return new Hash($app->config);
+});
+
+$app->container->singleton('validation', function() use($app) {
+	return new Validator($app->user);
 });
 
 $app->container->set('user', function() {
