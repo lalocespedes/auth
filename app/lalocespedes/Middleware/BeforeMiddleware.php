@@ -28,5 +28,9 @@ class BeforeMiddleware extends Middleware
 			$this->app->auth = $this->app->user->where('id', $_SESSION[$this->app->config->get('auth.session')])->first();
 		}
 
+		$this->app->view()->appendData([
+			'baseUrl'	=> $this->app->config->get('app.url')
+		]);
+
 	}
 }

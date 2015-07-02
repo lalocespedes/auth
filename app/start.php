@@ -76,3 +76,13 @@ $app->container->singleton('mail', function() use($app) {
 $app->container->set('user', function() {
 	return new User;
 });
+
+$view = $app->view();
+
+$view->parseOptions = [
+	'debug'	=> $app->config->get('twig.debug')
+];
+
+$view->parserExtensions = [
+	new TwigExtension
+];

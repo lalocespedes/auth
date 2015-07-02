@@ -2,7 +2,7 @@
 
 return [
 	'app' 	=> [
-		'url'	=> '',
+		'url'	=> 'http://auth.local',
 		'hash'	=> [
 			'algo'	=> PASSWORD_BCRYPT,
 			'cost'	=> 10
