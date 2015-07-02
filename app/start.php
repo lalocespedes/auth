@@ -11,6 +11,8 @@ use lalocespedes\User\User;
 use lalocespedes\Helpers\Hash;
 use lalocespedes\Validation\Validator;
 
+use lalocespedes\Middleware\Beforemiddleware;
+
 // set timezone for timestamps etc
 date_default_timezone_set('Mexico/General');
 
@@ -29,6 +31,8 @@ $app = new Slim([
 	'templates.path' => INC_ROOT . '/app/views'
 ]);
 
+$app->add(new Beforemiddleware);
+
 $app->configureMode($app->config('mode'), function() use ($app) {
 	$app->config = Config::load(INC_ROOT . "/app/config/{$app->mode}.php");
 });
@@ -36,6 +40,7 @@ $app->configureMode($app->config('mode'), function() use ($app) {
 require 'routes.php';
 require 'database.php';
 
+$app->auth = false;
 
 $app->container->singleton('randomlib', function() use($app) {
 	$factory = new RandomLib;
