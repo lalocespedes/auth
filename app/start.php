@@ -87,3 +87,16 @@ $view->parseOptions = [
 $view->parserExtensions = [
 	new TwigExtension
 ];
+
+function echoRespnse($status_code, $response) {
+    
+    $app = new Slim();
+
+    // Http response code
+    $app->status($status_code);
+
+    // setting response content type to json
+    $app->contentType('application/json');
+
+    echo json_encode($response);
+};

@@ -16,6 +16,7 @@ $app->get('/activate', $guest(), function() use($app) {
 	if (!$user || !$app->hash->hashCheck($user->active_hash, $hashedIdentifier)) {
 		
 		echo "Error activacion";
+		
 	} else {
 
 		$user->activateAccount();

@@ -21,7 +21,7 @@ class UsersMigration extends AbstractMigration
               ->addColumn('first_name', 'string', array('limit' => 50, 'null' => true))
               ->addColumn('last_name', 'string', array('limit' => 50, 'null' => true))
               ->addColumn('password', 'string', array('limit' => 255))
-              ->addColumn('active', 'integer', array('limit' =>  MysqlAdapter::INT_TINY))
+              ->addColumn('active', 'boolean')
               ->addColumn('active_hash', 'string', array('limit' => 255, 'null' => true))
               ->addColumn('recover_hash', 'string', array('limit' => 255, 'null' => true))
               ->addColumn('remember_identifier', 'string', array('limit' => 255, 'null' => true))

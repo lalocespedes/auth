@@ -1,12 +1,12 @@
 <?php
 
-$app->get('/', $authenticated(), function() use ($app) {
+$app->get('/', function() use ($app) {
 
 	echo "Home".'<br>';
 
 	var_dump($_SESSION).'<br>';
 
-	if($app->auth){
+	if($app->auth) {
 
 		dd($app->auth->username);
 

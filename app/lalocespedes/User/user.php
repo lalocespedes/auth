@@ -16,6 +16,7 @@ class User extends Eloquent
 		'password',
 		'active',
 		'active_hash',
+		'recover_hash',
 		'remember_identifier',
 		'remember_token',
 	];
@@ -41,4 +42,21 @@ class User extends Eloquent
 				'active_hash' => null
 			]);
 	}
+
+	public function hasPermission($permission)
+	{
+		return (bool) $this->permissions->{$permission};
+	}
+
+	public function isAdmin()
+	{
+		return $this->hasPermission('is_admin');
+	}
+
+	public function permissions()
+	{
+		return $this->hasOne('lalocespedes\User\UserPermission', 'user_id');
+	}
+
+
 }

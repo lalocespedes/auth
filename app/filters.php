@@ -6,7 +6,7 @@ $authenticationCheck = function($required) use ($app) {
 
 		if ((!$app->auth && $required) || ($app->auth && !$required)) {
 			
-			echo "No autenticado".'<br>';
+			$app->stop();
 		}
 	};
 };
@@ -20,5 +20,19 @@ $authenticated = function() use($authenticationCheck) {
 $guest = function() use($authenticationCheck) {
 
 	return $authenticationCheck(false);
+
+};
+
+$admin = function() use ($app) {
+
+	return function() use ($app) {
+
+		if (!$app->auth || !$app->auth->isAdmin()) {
+
+			$response["message"] = "Access Denied. Admin Area";
+            echoRespnse(401, $response);
+			$app->stop();
+		}
+	};
 
 };

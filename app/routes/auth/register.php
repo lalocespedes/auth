@@ -1,5 +1,7 @@
 <?php
 
+use lalocespedes\User\UserPermission;
+
 $app->post('/register', $guest(), function() use($app) {
 	
 	$request = $app->request;
@@ -29,6 +31,8 @@ $app->post('/register', $guest(), function() use($app) {
 			'active' => false,
 			'active_hash' => $app->hash->hash($identifier)
 		]);
+
+		$user->permissions()->create(UserPermission::$defaults);
 
 		$app->mail->send('email/auth/registered.php', ['user' => $user, 'identifier' => $identifier], function($message) use($user) {
 
